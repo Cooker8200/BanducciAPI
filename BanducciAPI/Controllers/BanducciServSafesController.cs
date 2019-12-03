@@ -12,56 +12,56 @@ namespace BanducciAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BanducciRepairsController : ControllerBase
+    public class BanducciServSafesController : ControllerBase
     {
         private readonly BanducciDataContext _context;
 
-        public BanducciRepairsController(BanducciDataContext context)
+        public BanducciServSafesController(BanducciDataContext context)
         {
             _context = context;
         }
 
-        // GET: api/BanducciRepairs
+        // GET: api/BanducciServSafes
         [HttpGet]
-        public IEnumerable<BanducciRepair> GetBanducciRepair()
+        public IEnumerable<BanducciServSafe> GetBanducciServSafe()
         {
-            return _context.BanducciRepair;
+            return _context.BanducciServSafe;
         }
 
-        // GET: api/BanducciRepairs/5
+        // GET: api/BanducciServSafes/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetBanducciRepair([FromRoute] int id)
+        public async Task<IActionResult> GetBanducciServSafe([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var banducciRepair = await _context.BanducciRepair.FindAsync(id);
+            var banducciServSafe = await _context.BanducciServSafe.FindAsync(id);
 
-            if (banducciRepair == null)
+            if (banducciServSafe == null)
             {
                 return NotFound();
             }
 
-            return Ok(banducciRepair);
+            return Ok(banducciServSafe);
         }
 
-        // PUT: api/BanducciRepairs/5
+        // PUT: api/BanducciServSafes/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBanducciRepair([FromRoute] int id, [FromBody] BanducciRepair banducciRepair)
+        public async Task<IActionResult> PutBanducciServSafe([FromRoute] int id, [FromBody] BanducciServSafe banducciServSafe)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != banducciRepair.Id)
+            if (id != banducciServSafe.EmployeeId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(banducciRepair).State = EntityState.Modified;
+            _context.Entry(banducciServSafe).State = EntityState.Modified;
 
             try
             {
@@ -69,7 +69,7 @@ namespace BanducciAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BanducciRepairExists(id))
+                if (!BanducciServSafeExists(id))
                 {
                     return NotFound();
                 }
@@ -82,45 +82,45 @@ namespace BanducciAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/BanducciRepairs
+        // POST: api/BanducciServSafes
         [HttpPost]
-        public async Task<IActionResult> PostBanducciRepair([FromBody] BanducciRepair banducciRepair)
+        public async Task<IActionResult> PostBanducciServSafe([FromBody] BanducciServSafe banducciServSafe)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.BanducciRepair.Add(banducciRepair);
+            _context.BanducciServSafe.Add(banducciServSafe);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBanducciRepair", new { id = banducciRepair.Id }, banducciRepair);
+            return CreatedAtAction("GetBanducciServSafe", new { id = banducciServSafe.EmployeeId }, banducciServSafe);
         }
 
-        // DELETE: api/BanducciRepairs/5
+        // DELETE: api/BanducciServSafes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBanducciRepair([FromRoute] int id)
+        public async Task<IActionResult> DeleteBanducciServSafe([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var banducciRepair = await _context.BanducciRepair.FindAsync(id);
-            if (banducciRepair == null)
+            var banducciServSafe = await _context.BanducciServSafe.FindAsync(id);
+            if (banducciServSafe == null)
             {
                 return NotFound();
             }
 
-            _context.BanducciRepair.Remove(banducciRepair);
+            _context.BanducciServSafe.Remove(banducciServSafe);
             await _context.SaveChangesAsync();
 
-            return Ok(banducciRepair);
+            return Ok(banducciServSafe);
         }
 
-        private bool BanducciRepairExists(int id)
+        private bool BanducciServSafeExists(int id)
         {
-            return _context.BanducciRepair.Any(e => e.Id == id);
+            return _context.BanducciServSafe.Any(e => e.EmployeeId == id);
         }
     }
 }
