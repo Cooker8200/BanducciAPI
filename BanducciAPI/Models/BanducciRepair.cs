@@ -17,6 +17,6 @@ namespace BanducciAPI.Models
         public string ServiceType { get; set; }
         public string Details { get; set; }
         public int Cost { get; set; }
-        public int Paid { get; set; }
+        public bool Paid { get; set; }
     }
 }
