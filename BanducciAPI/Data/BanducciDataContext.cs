@@ -18,5 +18,6 @@ namespace BanducciAPI.Data
         public DbSet<BanducciEmployee> BanducciEmployee { get; set; }
         public DbSet<BanducciRepair> BanducciRepair { get; set; }
         public DbSet<BanducciServSafe> BanducciServSafe { get; set; }
+        public DbSet<BanducciHepA> BanducciHepA { get; set; }
     }
 }
