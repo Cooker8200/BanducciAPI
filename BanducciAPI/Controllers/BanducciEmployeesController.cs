@@ -86,9 +86,11 @@ namespace BanducciAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> PostBanducciEmployee([FromBody] BanducciEmployee banducciEmployee)
         {
-            if (!ModelState.IsValid)
+            if (String.IsNullOrEmpty(banducciEmployee.FirstName) ||
+                String.IsNullOrEmpty(banducciEmployee.LastName) ||
+                String.IsNullOrEmpty(banducciEmployee.HireDate.ToString()))
             {
-                return BadRequest(ModelState);
+                return BadRequest("missing informaiton");
             }
 
             _context.BanducciEmployee.Add(banducciEmployee);
