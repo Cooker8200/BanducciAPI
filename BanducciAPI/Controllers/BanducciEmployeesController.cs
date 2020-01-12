@@ -90,7 +90,7 @@ namespace BanducciAPI.Controllers
                 String.IsNullOrEmpty(banducciEmployee.LastName) ||
                 String.IsNullOrEmpty(banducciEmployee.HireDate.ToString()))
             {
-                return BadRequest("missing informaiton");
+                return BadRequest("Missing First Name, Last Name, or Hire Date");
             }
 
             _context.BanducciEmployee.Add(banducciEmployee);

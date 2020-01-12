@@ -86,10 +86,30 @@ namespace BanducciAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> PostBanducciHepA([FromBody] BanducciHepA banducciHepA)
         {
-            if (!ModelState.IsValid)
+            var employeeController = new BanducciEmployeesController(_context);
+            var employees = employeeController.GetBanducciEmployee();
+            var employeeIds = new List<int>();
+            var matchedEmployee = employees.First(x => (x.EmployeeId == banducciHepA.EmployeeId) || (x.FirstName == banducciHepA.FirstName && x.LastName == banducciHepA.LastName));
+            foreach (var emp in employees)
             {
-                return BadRequest(ModelState);
+                employeeIds.Add(emp.EmployeeId);
             }
+            if(!employeeIds.Contains(banducciHepA.EmployeeId))
+            {
+                return BadRequest("EmployeeId does not exist in Employee database.");
+            }
+            if(String.IsNullOrEmpty(banducciHepA.FirstShot.ToString()))
+            {
+                return BadRequest("First Shot Date is required");
+            }
+            if(banducciHepA.SecondShot > banducciHepA.FirstShot)
+            {
+                return BadRequest("Second Shot cannot occur before First Shot");
+            }
+
+            banducciHepA.FirstName = matchedEmployee.FirstName;
+            banducciHepA.LastName = matchedEmployee.LastName;
+            banducciHepA.EmployeeId = matchedEmployee.EmployeeId;
 
             _context.BanducciHepA.Add(banducciHepA);
             await _context.SaveChangesAsync();

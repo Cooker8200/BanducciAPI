@@ -11,7 +11,7 @@ namespace BanducciAPI.Models
         [Key]
         public int EmployeeId { get; set; }
         public string FirstName { get; set; }
-        public string LastNAme { get; set; }
+        public string LastName { get; set; }
         public DateTime? FirstShot { get; set; }
         public DateTime? SecondShot { get; set; }
     }
