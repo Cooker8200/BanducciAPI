@@ -86,10 +86,22 @@ namespace BanducciAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> PostBanducciServSafe([FromBody] BanducciServSafe banducciServSafe)
         {
-            if (!ModelState.IsValid)
+            var employeeController = new BanducciEmployeesController(_context);
+            var employees = employeeController.GetBanducciEmployee();
+            var employeeIds = new List<int>();
+            var matchedEmployee = employees.First(x => (x.EmployeeId == banducciServSafe.EmployeeId) || (x.FirstName == banducciServSafe.FirstName && x.LastName == banducciServSafe.LastName));
+            foreach (var emp in employees)
             {
-                return BadRequest(ModelState);
+                employeeIds.Add(emp.EmployeeId);
             }
+            if (!employeeIds.Contains(banducciServSafe.EmployeeId))
+            {
+                return BadRequest("EmployeeId does not exist in Employee database.");
+            }
+
+            banducciServSafe.FirstName = matchedEmployee.FirstName;
+            banducciServSafe.LastName = matchedEmployee.LastName;
+            banducciServSafe.EmployeeId = matchedEmployee.EmployeeId;
 
             _context.BanducciServSafe.Add(banducciServSafe);
             await _context.SaveChangesAsync();

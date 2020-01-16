@@ -86,9 +86,15 @@ namespace BanducciAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> PostBanducciLocation([FromBody] BanducciLocation banducciLocation)
         {
-            if (!ModelState.IsValid)
+            //TODO: investigate address verification through usps api
+            if (String.IsNullOrEmpty(banducciLocation.StoreNumber.ToString()) ||
+                String.IsNullOrEmpty(banducciLocation.Name) ||
+                String.IsNullOrEmpty(banducciLocation.Address) ||
+                String.IsNullOrEmpty(banducciLocation.City) ||
+                String.IsNullOrEmpty(banducciLocation.State) ||
+                String.IsNullOrEmpty(banducciLocation.ZipCode.ToString()))
             {
-                return BadRequest(ModelState);
+                return BadRequest("Missing Location Data.  Verify information.");
             }
 
             _context.BanducciLocation.Add(banducciLocation);
