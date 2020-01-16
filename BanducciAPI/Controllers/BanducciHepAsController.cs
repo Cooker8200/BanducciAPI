@@ -102,7 +102,7 @@ namespace BanducciAPI.Controllers
             {
                 return BadRequest("First Shot Date is required");
             }
-            if(banducciHepA.SecondShot > banducciHepA.FirstShot)
+            if(banducciHepA.SecondShot < banducciHepA.FirstShot)
             {
                 return BadRequest("Second Shot cannot occur before First Shot");
             }
