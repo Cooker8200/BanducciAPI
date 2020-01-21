@@ -29,7 +29,7 @@ namespace BanducciAPI.Controllers
         }
 
         // GET: api/BanducciLocations/5
-        [HttpGet("{id}")]
+        [HttpGet("id/{id}")]
         public async Task<IActionResult> GetBanducciLocation([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -38,6 +38,24 @@ namespace BanducciAPI.Controllers
             }
 
             var banducciLocation = await _context.BanducciLocation.FindAsync(id);
+
+            if (banducciLocation == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(banducciLocation);
+        }
+
+        [HttpGet("name/{name}")]
+        public async Task<IActionResult> GetBanducciLocation([FromRoute] string name)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var banducciLocation = await _context.BanducciLocation.FirstAsync(x => x.Name == name);
 
             if (banducciLocation == null)
             {
