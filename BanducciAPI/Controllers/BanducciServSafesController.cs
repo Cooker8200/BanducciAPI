@@ -109,27 +109,6 @@ namespace BanducciAPI.Controllers
             return CreatedAtAction("GetBanducciServSafe", new { id = banducciServSafe.EmployeeId }, banducciServSafe);
         }
 
-        // DELETE: api/BanducciServSafes/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBanducciServSafe([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var banducciServSafe = await _context.BanducciServSafe.FindAsync(id);
-            if (banducciServSafe == null)
-            {
-                return NotFound();
-            }
-
-            _context.BanducciServSafe.Remove(banducciServSafe);
-            await _context.SaveChangesAsync();
-
-            return Ok(banducciServSafe);
-        }
-
         private bool BanducciServSafeExists(int id)
         {
             return _context.BanducciServSafe.Any(e => e.EmployeeId == id);

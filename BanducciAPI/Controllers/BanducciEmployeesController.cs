@@ -99,27 +99,6 @@ namespace BanducciAPI.Controllers
             return CreatedAtAction("GetBanducciEmployee", new { id = banducciEmployee.EmployeeId }, banducciEmployee);
         }
 
-        // DELETE: api/BanducciEmployees/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBanducciEmployee([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var banducciEmployee = await _context.BanducciEmployee.FindAsync(id);
-            if (banducciEmployee == null)
-            {
-                return NotFound();
-            }
-
-            _context.BanducciEmployee.Remove(banducciEmployee);
-            await _context.SaveChangesAsync();
-
-            return Ok(banducciEmployee);
-        }
-
         private bool BanducciEmployeeExists(int id)
         {
             return _context.BanducciEmployee.Any(e => e.EmployeeId == id);

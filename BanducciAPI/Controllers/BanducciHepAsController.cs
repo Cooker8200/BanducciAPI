@@ -117,27 +117,6 @@ namespace BanducciAPI.Controllers
             return CreatedAtAction("GetBanducciHepA", new { id = banducciHepA.EmployeeId }, banducciHepA);
         }
 
-        // DELETE: api/BanducciHepAs/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBanducciHepA([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var banducciHepA = await _context.BanducciHepA.FindAsync(id);
-            if (banducciHepA == null)
-            {
-                return NotFound();
-            }
-
-            _context.BanducciHepA.Remove(banducciHepA);
-            await _context.SaveChangesAsync();
-
-            return Ok(banducciHepA);
-        }
-
         private bool BanducciHepAExists(int id)
         {
             return _context.BanducciHepA.Any(e => e.EmployeeId == id);

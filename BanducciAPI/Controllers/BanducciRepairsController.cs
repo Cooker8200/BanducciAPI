@@ -97,27 +97,6 @@ namespace BanducciAPI.Controllers
             return CreatedAtAction("GetBanducciRepair", new { id = banducciRepair.Id }, banducciRepair);
         }
 
-        // DELETE: api/BanducciRepairs/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBanducciRepair([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var banducciRepair = await _context.BanducciRepair.FindAsync(id);
-            if (banducciRepair == null)
-            {
-                return NotFound();
-            }
-
-            _context.BanducciRepair.Remove(banducciRepair);
-            await _context.SaveChangesAsync();
-
-            return Ok(banducciRepair);
-        }
-
         private bool BanducciRepairExists(int id)
         {
             return _context.BanducciRepair.Any(e => e.Id == id);

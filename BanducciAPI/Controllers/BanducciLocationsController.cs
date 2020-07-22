@@ -103,27 +103,6 @@ namespace BanducciAPI.Controllers
             return CreatedAtAction("GetBanducciLocation", new { id = banducciLocation.StoreNumber }, banducciLocation);
         }
 
-        // DELETE: api/BanducciLocations/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBanducciLocation([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var banducciLocation = await _context.BanducciLocation.FindAsync(id);
-            if (banducciLocation == null)
-            {
-                return NotFound();
-            }
-
-            _context.BanducciLocation.Remove(banducciLocation);
-            await _context.SaveChangesAsync();
-
-            return Ok(banducciLocation);
-        }
-
         private bool BanducciLocationExists(int id)
         {
             return _context.BanducciLocation.Any(e => e.StoreNumber == id);
